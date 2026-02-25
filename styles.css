@@ -732,13 +732,14 @@ body {
 /* Author — positioned via margin in the grid */
 .s3-quote-author {
   position: absolute;
-  bottom: -150px;
+  top: 128px;
   left: 387px;
   font-family: 'FFF Acid Grotesk', sans-serif;
   font-weight: 300;
   font-size: 16px;
   line-height: 1.38;
   color: #021c25;
+  white-space: nowrap;
   z-index: 3;
 }
 
@@ -3367,7 +3368,7 @@ body {
 
   /* --- Section 5: Politics --- */
   .section-5 {
-    padding: 80px 0 80px !important;
+    padding: 80px 0 40px !important;
   }
 
   .section-5-content {
@@ -4658,13 +4659,14 @@ body {
     margin-top: 24px !important;
   }
   .s9-closing-quote {
-    width: 100% !important;
-    max-width: 100% !important;
-    left: 0 !important;
-    right: 0 !important;
+    width: calc(100% - 80px) !important;
+    max-width: calc(100% - 80px) !important;
+    left: 40px !important;
+    right: 40px !important;
     transform: none !important;
     margin: 0 !important;
     font-size: 24px !important;
+    line-height: 1.4 !important;
     text-align: center !important;
   }
 

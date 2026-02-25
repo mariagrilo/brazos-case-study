@@ -1270,11 +1270,15 @@
         var t = (progress - 0.50) / 0.08;
         s9ImgReports.style.opacity = String(t);
         s9ImgReports.style.top = (imgH - t * imgH) + 'px';
-      } else if (progress < 0.74) {
+      } else if (progress < 0.70) {
         s9ImgReports.style.opacity = '1';
         s9ImgReports.style.top = '0';
+      } else if (progress < 0.78) {
+        var t = (progress - 0.70) / 0.08;
+        s9ImgReports.style.opacity = String(1 - t);
+        s9ImgReports.style.top = '0';
       } else {
-        s9ImgReports.style.opacity = '1';
+        s9ImgReports.style.opacity = '0';
         s9ImgReports.style.top = '0';
       }
 
@@ -1284,14 +1288,17 @@
       } else if (progress < 0.58) {
         var t = (progress - 0.52) / 0.06;
         s9FeatReports.style.opacity = String(t);
-      } else if (progress < 0.74) {
+      } else if (progress < 0.70) {
         s9FeatReports.style.opacity = '1';
+      } else if (progress < 0.78) {
+        var t = (progress - 0.70) / 0.08;
+        s9FeatReports.style.opacity = String(1 - t);
       } else {
-        s9FeatReports.style.opacity = '1';
+        s9FeatReports.style.opacity = '0';
       }
 
       // === CLOSING QUOTE ===
-      var quoteCenter = vh / 2 - 80;
+      var quoteCenter = vh / 2;
       if (progress < 0.78) {
         s9ClosingQuote.style.opacity = '0';
         s9ClosingQuote.style.top = '';
