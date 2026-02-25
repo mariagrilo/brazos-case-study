@@ -3368,7 +3368,7 @@ body {
 
   /* --- Section 5: Politics --- */
   .section-5 {
-    padding: 80px 0 40px !important;
+    padding: 80px 0 80px !important;
   }
 
   .section-5-content {
@@ -3557,12 +3557,12 @@ body {
   }
 
   .s7-scroll-container {
-    height: 250vh !important;
+    height: auto !important;
     position: relative !important;
   }
 
   .s7-sticky {
-    position: sticky !important;
+    position: relative !important;
     width: 100% !important;
     padding: 40px 16px 60px !important;
     box-sizing: border-box !important;
@@ -3571,7 +3571,6 @@ body {
     gap: 40px !important;
     align-items: flex-start !important;
     overflow: visible !important;
-    /* top is set by JS to pin from the bottom */
   }
 
   .s7-sitemap {
