@@ -256,11 +256,12 @@
   }
 
   if (section3 && s3Content) {
-    // Article + composition: triggers as soon as section enters viewport
+    // Article + composition: triggers when section is well into viewport
     let s3Visible = false;
     function checkS3Entrance() {
       const contentRect = s3Content.getBoundingClientRect();
-      const inView = contentRect.top < window.innerHeight && contentRect.bottom > 0;
+      var triggerPoint = isMobile ? window.innerHeight * 0.7 : window.innerHeight;
+      const inView = contentRect.top < triggerPoint && contentRect.bottom > 0;
       if (inView && !s3Visible) {
         s3Visible = true;
         if (s3Article) setTimeout(() => s3Article.classList.add('visible'), 100);
@@ -288,7 +289,7 @@
           entry.target.classList.remove('visible');
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.3, rootMargin: '0px 0px -15% 0px' });
     if (s3VideoCard) s3ElObserver.observe(s3VideoCard);
     if (s3QuoteContainer) s3ElObserver.observe(s3QuoteContainer);
   }
@@ -1004,14 +1005,11 @@
       const box = document.getElementById(targetId);
       if (!box) return;
       const isOpen = box.classList.contains('open');
-      // Close all other boxes
-      document.querySelectorAll('.s8-expand-box').forEach((b) => {
-        b.classList.remove('open');
-        const h = b.querySelector('.s8-expand-header');
-        if (h) h.setAttribute('aria-expanded', 'false');
-      });
       // Toggle the clicked one
-      if (!isOpen) {
+      if (isOpen) {
+        box.classList.remove('open');
+        this.setAttribute('aria-expanded', 'false');
+      } else {
         box.classList.add('open');
         this.setAttribute('aria-expanded', 'true');
         // Scroll down so expanded content is visible with 80px breathing room
