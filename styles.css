@@ -1192,11 +1192,21 @@ body {
   margin: 0 auto;
 }
 
-/* Safari sticky jitter fix: JS adds this class and uses translateY to simulate sticky */
+/* Safari sticky jitter fix: JS toggles between relative/fixed/absolute */
 .s6-sticky.safari-pin {
   position: relative;
-  will-change: transform;
-  -webkit-backface-visibility: hidden;
+}
+.s6-sticky.safari-pin-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 6;
+}
+.s6-sticky.safari-pin-bottom {
+  position: absolute;
+  bottom: 0;
+  top: auto;
+  left: 0;
 }
 
 /* Left: Text column */

@@ -5,16 +5,24 @@
   const tagline = document.querySelector('.tagline');
   const isometric = document.querySelector('.isometric');
 
-  // Force autoplay on the dashboard video (some browsers block autoplay until loaded)
+  // Force autoplay on the dashboard video
   const dashVid = document.querySelector('.dashboard-image');
   if (dashVid) {
-    dashVid.play().catch(function() {
-      // Retry on user interaction if autoplay was blocked
-      document.addEventListener('scroll', function playOnScroll() {
-        dashVid.play();
-        document.removeEventListener('scroll', playOnScroll);
-      }, { once: true });
-    });
+    function tryPlayDash() {
+      if (dashVid.paused) {
+        dashVid.muted = true; // ensure muted (required for autoplay)
+        dashVid.play().catch(function() {});
+      }
+    }
+    // Try immediately
+    tryPlayDash();
+    // Retry when video data is ready
+    dashVid.addEventListener('canplay', tryPlayDash);
+    dashVid.addEventListener('loadeddata', tryPlayDash);
+    // Retry on first user interaction as last resort
+    document.addEventListener('click', tryPlayDash, { once: true });
+    document.addEventListener('scroll', tryPlayDash, { once: true });
+    document.addEventListener('touchstart', tryPlayDash, { once: true });
   }
 
   function easeOutCubic(t) {
@@ -511,14 +519,26 @@
       // progress: 0 at top, 1 when sticky releases
       const progress = Math.min(1, Math.max(0, -rect.top / scrollableHeight));
 
-      // Safari: pin with translateY instead of sticky
+      // Safari: toggle fixed/relative/absolute to simulate sticky without jitter
       if (s6IsSafariFix && s6Sticky) {
         if (rect.top <= 0 && rect.bottom > vh) {
-          s6Sticky.style.transform = 'translateY(' + (-rect.top) + 'px)';
+          // Pinned in viewport
+          if (!s6Sticky.classList.contains('safari-pin-fixed')) {
+            s6Sticky.classList.remove('safari-pin-bottom');
+            s6Sticky.classList.add('safari-pin-fixed');
+          }
         } else if (rect.top > 0) {
-          s6Sticky.style.transform = 'translateY(0)';
+          // Haven't scrolled to section yet
+          if (!s6Sticky.classList.contains('safari-pin')) {
+            s6Sticky.classList.add('safari-pin');
+          }
+          s6Sticky.classList.remove('safari-pin-fixed', 'safari-pin-bottom');
         } else {
-          s6Sticky.style.transform = 'translateY(' + scrollableHeight + 'px)';
+          // Past the section — stick to bottom
+          if (!s6Sticky.classList.contains('safari-pin-bottom')) {
+            s6Sticky.classList.remove('safari-pin-fixed');
+            s6Sticky.classList.add('safari-pin-bottom');
+          }
         }
       }
 
