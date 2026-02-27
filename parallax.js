@@ -5,6 +5,18 @@
   const tagline = document.querySelector('.tagline');
   const isometric = document.querySelector('.isometric');
 
+  // Force autoplay on the dashboard video (some browsers block autoplay until loaded)
+  const dashVid = document.querySelector('.dashboard-image');
+  if (dashVid) {
+    dashVid.play().catch(function() {
+      // Retry on user interaction if autoplay was blocked
+      document.addEventListener('scroll', function playOnScroll() {
+        dashVid.play();
+        document.removeEventListener('scroll', playOnScroll);
+      }, { once: true });
+    });
+  }
+
   function easeOutCubic(t) {
     return 1 - Math.pow(1 - t, 3);
   }
