@@ -1,4 +1,6 @@
 (() => {
+  var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
   const dashboardVideo = document.querySelector('.dashboard-video');
   const scrollSpacer = document.querySelector('.scroll-spacer');
   const logo = document.querySelector('.brazos-logo');
@@ -8,21 +10,33 @@
   // Force autoplay on the dashboard video
   const dashVid = document.querySelector('.dashboard-image');
   if (dashVid) {
+    // Ensure attributes are set (Safari private mode can be strict)
+    dashVid.muted = true;
+    dashVid.playsInline = true;
+    dashVid.setAttribute('muted', '');
+    dashVid.setAttribute('playsinline', '');
+
     function tryPlayDash() {
       if (dashVid.paused) {
-        dashVid.muted = true; // ensure muted (required for autoplay)
-        dashVid.play().catch(function() {});
+        var p = dashVid.play();
+        if (p && p.catch) p.catch(function() {});
       }
     }
-    // Try immediately
+    // Try immediately and on various load events
     tryPlayDash();
-    // Retry when video data is ready
     dashVid.addEventListener('canplay', tryPlayDash);
     dashVid.addEventListener('loadeddata', tryPlayDash);
-    // Retry on first user interaction as last resort
-    document.addEventListener('click', tryPlayDash, { once: true });
-    document.addEventListener('scroll', tryPlayDash, { once: true });
-    document.addEventListener('touchstart', tryPlayDash, { once: true });
+    dashVid.addEventListener('loadedmetadata', tryPlayDash);
+    // Keep retrying periodically until it plays (covers slow network)
+    var dashRetryInterval = setInterval(function() {
+      tryPlayDash();
+      if (!dashVid.paused) clearInterval(dashRetryInterval);
+    }, 500);
+    setTimeout(function() { clearInterval(dashRetryInterval); }, 15000);
+    // Also retry on user interaction
+    ['click', 'scroll', 'touchstart', 'keydown'].forEach(function(evt) {
+      document.addEventListener(evt, tryPlayDash, { once: true });
+    });
   }
 
   function easeOutCubic(t) {
@@ -506,9 +520,8 @@
   const s6Shot3 = document.querySelector('.s6-shot-3');
 
   if (s6Container) {
-    // Safari: simulate sticky with translateY since Safari jitters with position:sticky
+    // Safari: simulate sticky with fixed positioning since Safari jitters with position:sticky
     var s6Sticky = document.querySelector('.s6-sticky');
-    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     var s6IsSafariFix = isSafari && s6Sticky;
     if (s6IsSafariFix) s6Sticky.classList.add('safari-pin');
 
@@ -1847,6 +1860,10 @@
   var s12ClosingText = document.querySelector('.s12-closing-text');
 
   if (s12ScrollContainer && s12Team && s12Closing && s12Cta) {
+    // Safari sticky jitter fix for S12 (same as S6)
+    var s12Sticky = document.querySelector('.s12-sticky');
+    var s12IsSafariFix = isSafari && s12Sticky;
+    if (s12IsSafariFix) s12Sticky.classList.add('safari-pin');
     // Mobile: fade in credits + team when section enters viewport
     if (window.innerWidth <= 1024) {
       var s12Section = document.querySelector('.section-12');
@@ -1876,9 +1893,27 @@
     function updateSection12() {
       var isMobile = window.innerWidth <= 1024;
       const rect = s12ScrollContainer.getBoundingClientRect();
-      const scrollHeight = s12ScrollContainer.offsetHeight - window.innerHeight;
+      const vh = window.innerHeight;
+      const scrollHeight = s12ScrollContainer.offsetHeight - vh;
       const scrolled = -rect.top;
       const progress = Math.max(0, Math.min(1, scrolled / scrollHeight));
+
+      // Safari: toggle fixed/relative/absolute to simulate sticky
+      if (s12IsSafariFix && s12Sticky) {
+        if (rect.top <= 0 && rect.bottom > vh) {
+          if (!s12Sticky.classList.contains('safari-pin-fixed')) {
+            s12Sticky.classList.remove('safari-pin-bottom');
+            s12Sticky.classList.add('safari-pin-fixed');
+          }
+        } else if (rect.top > 0) {
+          s12Sticky.classList.remove('safari-pin-fixed', 'safari-pin-bottom');
+        } else {
+          if (!s12Sticky.classList.contains('safari-pin-bottom')) {
+            s12Sticky.classList.remove('safari-pin-fixed');
+            s12Sticky.classList.add('safari-pin-bottom');
+          }
+        }
+      }
 
       var teamMaxOpacity = 1;
       var closingMaxOpacity = 1;
