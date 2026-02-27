@@ -3274,7 +3274,7 @@ body {
   .s3-quote-author {
     display: block !important;
     position: static !important;
-    margin-top: clamp(0px, calc(-33.96px + 10.61vw), 24px) !important;
+    margin-top: 0 !important;
     margin-left: 0 !important;
     font-size: 16px;
   }
@@ -4322,7 +4322,7 @@ body {
     z-index: 2;
     bottom: auto !important;
     left: auto !important;
-    margin-top: 24px !important;
+    margin-top: 8px !important;
   }
 
   /* S4: tablet layout */
