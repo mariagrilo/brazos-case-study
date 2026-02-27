@@ -3501,13 +3501,19 @@ body {
     height: 100vh !important;
     padding: clamp(16px, calc(-16px + 10vw), 32px) 16px clamp(32px, calc(0px + 10vw), 48px) !important;
     box-sizing: border-box !important;
+    top: 0 !important;
+  }
+
+  .s6-sticky-inner {
     display: grid !important;
     grid-template-columns: 1fr !important;
     grid-template-rows: auto auto 1fr !important;
     gap: clamp(16px, calc(-48px + 20vw), 64px) !important;
     align-items: start !important;
     align-content: start !important;
-    top: 0 !important;
+    height: 100% !important;
+    width: 100% !important;
+    max-width: none !important;
   }
 
   .s6-text {
@@ -4425,6 +4431,9 @@ body {
 
   .s6-sticky {
     padding: 100px 40px 48px !important;
+  }
+
+  .s6-sticky-inner {
     gap: 40px !important;
     align-items: start !important;
   }
