@@ -486,11 +486,29 @@
   const s6Shot3 = document.querySelector('.s6-shot-3');
 
   if (s6Container) {
+    // Safari: simulate sticky with translateY since Safari jitters with position:sticky
+    var s6Sticky = document.querySelector('.s6-sticky');
+    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    var s6IsSafariFix = isSafari && s6Sticky;
+    if (s6IsSafariFix) s6Sticky.classList.add('safari-pin');
+
     function updateSection6() {
       const rect = s6Container.getBoundingClientRect();
-      const scrollableHeight = rect.height - window.innerHeight;
+      const vh = window.innerHeight;
+      const scrollableHeight = rect.height - vh;
       // progress: 0 at top, 1 when sticky releases
       const progress = Math.min(1, Math.max(0, -rect.top / scrollableHeight));
+
+      // Safari: pin with translateY instead of sticky
+      if (s6IsSafariFix && s6Sticky) {
+        if (rect.top <= 0 && rect.bottom > vh) {
+          s6Sticky.style.transform = 'translateY(' + (-rect.top) + 'px)';
+        } else if (rect.top > 0) {
+          s6Sticky.style.transform = 'translateY(0)';
+        } else {
+          s6Sticky.style.transform = 'translateY(' + scrollableHeight + 'px)';
+        }
+      }
 
       // --- Text transitions ---
       // Compressed into first 65%, statement holds 65–80%, everything fades out 82–92%
@@ -560,7 +578,6 @@
       s6Bodies.forEach((body, i) => {
         const state = getBodyState(i);
         body.style.opacity = state.opacity;
-        body.style.transform = `translateY(${state.ty}px)`;
         if (i === activeBody) {
           body.classList.add('active');
           body.style.position = 'relative';
@@ -610,20 +627,12 @@
       if (progress < 0.60) {
         setArticleOpacity(1);
         s6Statement.style.opacity = 0;
-        if (isMobile) {
-          setMobileSlideUp(0);
-        } else {
-          s6Statement.style.transform = 'translateY(20px)';
-        }
+        if (isMobile) setMobileSlideUp(0);
       } else if (progress < 0.64) {
         const p = (progress - 0.60) / 0.04;
         setArticleOpacity(1 - p);
         s6Statement.style.opacity = 0;
-        if (isMobile) {
-          setMobileSlideUp(p * mobileSlideAmount);
-        } else {
-          s6Statement.style.transform = 'translateY(20px)';
-        }
+        if (isMobile) setMobileSlideUp(p * mobileSlideAmount);
       } else if (progress < 0.68) {
         const p = (progress - 0.64) / 0.04;
         setArticleOpacity(0);
@@ -631,8 +640,6 @@
         if (isMobile) {
           setMobileSlideUp(mobileSlideAmount);
           positionMobileStatement();
-        } else {
-          s6Statement.style.transform = 'translateY(' + (20 * (1 - p)) + 'px)';
         }
       } else if (progress < 0.75) {
         setArticleOpacity(0);
@@ -640,8 +647,6 @@
         if (isMobile) {
           setMobileSlideUp(mobileSlideAmount);
           positionMobileStatement();
-        } else {
-          s6Statement.style.transform = 'translateY(0)';
         }
       } else if (progress < 0.82) {
         const fadeP = (progress - 0.75) / 0.07;
@@ -650,8 +655,6 @@
         if (isMobile) {
           setMobileSlideUp(mobileSlideAmount);
           positionMobileStatement();
-        } else {
-          s6Statement.style.transform = 'translateY(0)';
         }
       } else {
         setArticleOpacity(0);
@@ -836,8 +839,9 @@
         }
 
         // Sitemap slides up across the full scroll
-        const sitemapHeight = s7Sitemap.naturalHeight || 1211;
-        const maxShift = sitemapHeight - vh;
+        // Use a virtual height larger than any viewport to ensure upward scroll.
+        // Original PNG had naturalHeight=4096 which drove the parallax speed.
+        const maxShift = 4096 - vh;
         s7Sitemap.style.transform = `translateY(${-progress * maxShift}px)`;
 
         // Fade out content at the end (only after entrance is done)
@@ -948,13 +952,16 @@
   // --- Section 8: Line chart SVG animation setup ---
   const s8LineChart = document.querySelector('.s8-line-chart');
   if (s8LineChart) {
-    // Set stroke-dasharray for each vertical line
+    // Set stroke-dasharray for each vertical line and flip path direction (bottom→top)
     const vLines = s8LineChart.querySelectorAll('.s8-vlines line');
     vLines.forEach((line, i) => {
       const y1 = parseFloat(line.getAttribute('y1'));
       const y2 = parseFloat(line.getAttribute('y2'));
       const len = Math.abs(y2 - y1);
       line.style.setProperty('--line-len', len);
+      // Swap y1/y2 so the line path goes bottom→top, making the draw animation grow upward
+      line.setAttribute('y1', y2);
+      line.setAttribute('y2', y1);
     });
     // Mark ready — lines are now properly offset and can be made visible
     requestAnimationFrame(() => s8LineChart.classList.add('ready'));
