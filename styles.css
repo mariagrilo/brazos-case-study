@@ -1607,7 +1607,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0;
+  opacity: 0.5;
   transition: opacity 0.3s ease;
   cursor: pointer;
   z-index: 2;
@@ -3739,7 +3739,7 @@ body {
   .s8-video-card {
     width: 100% !important;
     height: auto !important;
-    aspect-ratio: 288 / 248 !important;
+    aspect-ratio: 1 / 1 !important;
   }
 
   .s8-video-poster {
@@ -4613,9 +4613,9 @@ body {
   }
 
   .s8-video-card {
-    width: 240px !important;
-    height: 427px !important;
-    aspect-ratio: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
     flex-shrink: 0 !important;
   }
 
