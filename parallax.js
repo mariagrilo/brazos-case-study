@@ -929,11 +929,9 @@
   const s7VideoCard = document.querySelector('.s7-video-card');
   const s7PlayBtn = document.querySelector('.s7-play-button');
   const s7Video = document.querySelector('.s7-video-player');
+  const s7Poster = document.querySelector('.s7-video-poster');
   if (s7VideoCard && s7PlayBtn && s7Video) {
-    // Seek to thumbnail frame on load
-    s7Video.addEventListener('loadedmetadata', () => { s7Video.currentTime = 3; });
     function toggleS7Video() {
-      // Mobile: open in fullscreen overlay (vertical video, no rotate)
       if (window.innerWidth <= 1024 && videoOverlay && overlayPlayer) {
         overlayPlayer.src = s7Video.querySelector('source')?.src || s7Video.src;
         videoOverlay.classList.remove('show-rotate');
@@ -944,21 +942,58 @@
         return;
       }
       if (s7Video.paused) {
-        s7Video.currentTime = 0;
         s7Video.play();
         s7Video.style.opacity = '1';
+        if (s7Poster) s7Poster.style.opacity = '0';
         s7PlayBtn.style.opacity = '0';
       } else {
         s7Video.pause();
-        s7Video.style.opacity = '0.5';
+        s7Video.style.opacity = '0';
+        if (s7Poster) s7Poster.style.opacity = '0.5';
         s7PlayBtn.style.opacity = '1';
       }
     }
     s7VideoCard.addEventListener('click', toggleS7Video);
     s7Video.addEventListener('ended', () => {
-      s7Video.currentTime = 3;
-      s7Video.style.opacity = '0.5';
+      s7Video.currentTime = 0;
+      s7Video.style.opacity = '0';
+      if (s7Poster) s7Poster.style.opacity = '0.5';
       s7PlayBtn.style.opacity = '1';
+    });
+  }
+
+  // --- Section 10: Maria Grilo video ---
+  const s10VideoCard = document.querySelector('.s10-video-card');
+  const s10PlayBtn = document.querySelector('.s10-play-button');
+  const s10Video = document.querySelector('.s10-video-player');
+  if (s10VideoCard && s10PlayBtn && s10Video) {
+    s10Video.addEventListener('loadedmetadata', () => { s10Video.currentTime = 3; });
+    function toggleS10Video() {
+      if (window.innerWidth <= 1024 && videoOverlay && overlayPlayer) {
+        overlayPlayer.src = s10Video.querySelector('source')?.src || s10Video.src;
+        videoOverlay.classList.remove('show-rotate');
+        videoOverlay.classList.add('active');
+        videoOverlay.setAttribute('aria-hidden', 'false');
+        overlayPlayer.currentTime = 0;
+        overlayPlayer.play();
+        return;
+      }
+      if (s10Video.paused) {
+        s10Video.currentTime = 0;
+        s10Video.play();
+        s10Video.style.opacity = '1';
+        s10PlayBtn.style.opacity = '0';
+      } else {
+        s10Video.pause();
+        s10Video.style.opacity = '0.5';
+        s10PlayBtn.style.opacity = '1';
+      }
+    }
+    s10VideoCard.addEventListener('click', toggleS10Video);
+    s10Video.addEventListener('ended', () => {
+      s10Video.currentTime = 3;
+      s10Video.style.opacity = '0.5';
+      s10PlayBtn.style.opacity = '1';
     });
   }
 

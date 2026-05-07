@@ -1409,7 +1409,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.5;
+  opacity: 0;
   transition: opacity 0.3s ease;
   cursor: pointer;
   z-index: 2;
@@ -2172,6 +2172,19 @@ body {
   height: 554px;
   object-fit: cover;
   opacity: 0.5;
+}
+
+.s10-video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  z-index: 1;
 }
 
 .s10-play-button {
