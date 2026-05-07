@@ -1394,7 +1394,7 @@ body {
 .s7-video-card {
   position: relative;
   width: 303px;
-  height: 303px;
+  height: 538px;
   border-radius: 16px;
   overflow: hidden;
   background-color: #074058;
@@ -4555,9 +4555,9 @@ body {
   }
 
   .s7-video-card {
-    width: 303px !important;
-    height: 538px !important;
-    aspect-ratio: auto !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    height: auto !important;
     opacity: 1 !important;
     transform: none !important;
   }
