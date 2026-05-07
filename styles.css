@@ -727,14 +727,16 @@ body {
 .s3-quote-icon {
   width: 22px;
   height: 22px;
-  align-self: flex-end;
+  position: absolute;
+  left: 387px;
+  top: 210px;
 }
 
 /* Author — positioned via margin in the grid */
 .s3-quote-author {
   position: absolute;
   top: 148px;
-  left: 497px;
+  left: 387px;
   font-family: 'FFF Acid Grotesk', sans-serif;
   font-weight: 300;
   font-size: 16px;
