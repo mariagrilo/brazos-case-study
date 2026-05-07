@@ -4033,6 +4033,7 @@ body {
     aspect-ratio: 1 / 1 !important;
     height: auto !important;
     border-radius: 16px !important;
+    order: 1 !important;
   }
 
   .s10-video-poster {
@@ -4049,6 +4050,7 @@ body {
     top: auto !important;
     width: 100% !important;
     gap: 8px !important;
+    order: 3 !important;
   }
 
   .s10-quote-mark {
@@ -4076,6 +4078,8 @@ body {
     top: auto !important;
     width: 100% !important;
     height: auto !important;
+    overflow: hidden !important;
+    order: 2 !important;
   }
 
   .s10-reports-page {
@@ -4084,6 +4088,7 @@ body {
     top: auto !important;
     width: 100% !important;
     height: auto !important;
+    order: 4 !important;
     aspect-ratio: 737 / 524 !important;
     border-radius: 8px !important;
     overflow: hidden !important;
