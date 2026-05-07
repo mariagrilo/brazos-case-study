@@ -4080,6 +4080,7 @@ body {
     height: auto !important;
     overflow: hidden !important;
     order: 2 !important;
+    margin-top: -48px !important;
   }
 
   .s10-reports-page {
