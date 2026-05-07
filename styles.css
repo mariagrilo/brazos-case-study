@@ -3661,7 +3661,7 @@ body {
   .s7-video-card {
     width: 100% !important;
     height: auto !important;
-    aspect-ratio: 288 / 248 !important;
+    aspect-ratio: 1 / 1 !important;
     border-radius: 16px !important;
     opacity: 0;
     transform: translateY(40px);
