@@ -949,14 +949,14 @@
         s7PlayBtn.style.opacity = '0';
       } else {
         s7Video.pause();
-        s7Video.style.opacity = '1';
+        s7Video.style.opacity = '0.5';
         s7PlayBtn.style.opacity = '1';
       }
     }
     s7VideoCard.addEventListener('click', toggleS7Video);
     s7Video.addEventListener('ended', () => {
       s7Video.currentTime = 3;
-      s7Video.style.opacity = '1';
+      s7Video.style.opacity = '0.5';
       s7PlayBtn.style.opacity = '1';
     });
   }
