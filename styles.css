@@ -732,7 +732,7 @@ body {
 /* Author — positioned via margin in the grid */
 .s3-quote-author {
   position: absolute;
-  top: 128px;
+  top: 148px;
   left: 387px;
   font-family: 'FFF Acid Grotesk', sans-serif;
   font-weight: 300;
