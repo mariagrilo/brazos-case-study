@@ -944,6 +944,7 @@
         return;
       }
       if (s7Video.paused) {
+        s7Video.currentTime = 0;
         s7Video.play();
         s7Video.style.opacity = '1';
         s7PlayBtn.style.opacity = '0';
