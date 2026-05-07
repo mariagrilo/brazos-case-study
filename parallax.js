@@ -930,10 +930,6 @@
   const s7PlayBtn = document.querySelector('.s7-play-button');
   const s7Video = document.querySelector('.s7-video-player');
   if (s7VideoCard && s7PlayBtn && s7Video) {
-    // Seek to first frame so it shows as thumbnail
-    s7Video.addEventListener('loadedmetadata', () => {
-      s7Video.currentTime = 0.001;
-    });
     function toggleS7Video() {
       // Mobile: open in fullscreen overlay (vertical video, no rotate)
       if (window.innerWidth <= 1024 && videoOverlay && overlayPlayer) {
@@ -947,15 +943,18 @@
       }
       if (s7Video.paused) {
         s7Video.play();
+        s7Video.style.opacity = '1';
         s7PlayBtn.style.opacity = '0';
       } else {
         s7Video.pause();
+        s7Video.style.opacity = '1';
         s7PlayBtn.style.opacity = '1';
       }
     }
     s7VideoCard.addEventListener('click', toggleS7Video);
     s7Video.addEventListener('ended', () => {
-      s7Video.currentTime = 0.001;
+      s7Video.currentTime = 0;
+      s7Video.style.opacity = '1';
       s7PlayBtn.style.opacity = '1';
     });
   }
