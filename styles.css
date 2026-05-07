@@ -2218,7 +2218,7 @@ body {
 .s10-quote-container {
   position: absolute;
   left: 543px;
-  top: 0;
+  bottom: 202px;
   width: 387px;
   display: flex;
   flex-direction: column;
