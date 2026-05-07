@@ -4030,7 +4030,8 @@ body {
     left: auto !important;
     top: auto !important;
     width: 100% !important;
-    height: 248px !important;
+    aspect-ratio: 1 / 1 !important;
+    height: auto !important;
     border-radius: 16px !important;
   }
 
@@ -4070,7 +4071,11 @@ body {
   }
 
   .s10-line-illustration {
-    display: none !important;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    height: auto !important;
   }
 
   .s10-reports-page {
