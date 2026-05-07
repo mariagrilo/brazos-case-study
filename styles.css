@@ -4076,9 +4076,9 @@ body {
     position: relative !important;
     left: auto !important;
     top: auto !important;
-    width: 100% !important;
+    width: 150% !important;
     height: auto !important;
-    overflow: hidden !important;
+    margin-left: -25% !important;
     order: 2 !important;
     margin-top: -104px !important;
   }
