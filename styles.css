@@ -2333,10 +2333,11 @@ body {
    Section 11: Results
    =========================================================== */
 .section-11 {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 11;
   background-color: #fffaf7;
-  padding: 0 0 160px;
+  padding: 0 0 320px;
   overflow-x: clip;
 }
 
@@ -4058,6 +4059,11 @@ body {
   }
 
   /* --- Section 11: Results --- */
+  .section-11 {
+    position: relative !important;
+    padding-bottom: 80px !important;
+  }
+
   .s11-inner {
     width: 100% !important;
     padding: 60px 16px;
@@ -4878,16 +4884,16 @@ body {
     height: auto !important;
   }
 
-  /* S11: tablet layout — based on 6-column Figma grid */
+  /* S11: tablet layout — based on Figma node 351:2617 */
   .s11-spacer {
     height: 10vh !important;
   }
   .s11-inner {
     width: 100% !important;
     max-width: 100% !important;
-    padding: 82px 40px 100px !important;
+    padding: 104px 40px 100px !important;
     box-sizing: border-box !important;
-    gap: 24px !important;
+    gap: 100px !important;
   }
   .s11-heading {
     font-size: 64px !important;
@@ -4895,12 +4901,15 @@ body {
     max-width: 100% !important;
   }
   .s11-cards {
-    width: 100% !important;
+    width: 435px !important;
+    max-width: 100% !important;
     flex-direction: column !important;
-    gap: 16px !important;
+    gap: 24px !important;
+    align-self: flex-start !important;
   }
   .s11-card {
-    flex: 1 1 0% !important;
+    flex: none !important;
+    width: 100% !important;
     padding: 24px !important;
     border-radius: 16px !important;
   }
