@@ -2351,7 +2351,7 @@ body {
   padding-top: 120px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 64px;
 }
 
 .s11-heading {
@@ -2362,70 +2362,17 @@ body {
   color: #021c25;
 }
 
-.s11-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-/* Left: Quote */
-.s11-quote {
-  width: 519px;
-  flex-shrink: 0;
-  padding-top: 32px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.s11-quote-block {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.s11-quote-mark {
-  width: 22px;
-  height: 22px;
-}
-
-.s11-quote-text {
-  font-family: 'FFF Acid Grotesk', sans-serif;
-  font-weight: 300;
-  font-size: 20px;
-  line-height: 1.38;
-  color: #021c25;
-}
-
-.s11-quote-close-wrapper {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.s11-quote-icon {
-  width: 22px;
-  height: 22px;
-}
-
-.s11-quote-author {
-  font-family: 'FFF Acid Grotesk', sans-serif;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 1.38;
-  color: #021c25;
-}
-
-/* Right: Cards */
+/* Cards row */
 .s11-cards {
-  width: 410px;
-  flex-shrink: 0;
   display: flex;
-  flex-direction: column;
-  gap: 24px;
+  flex-direction: row;
+  gap: 16px;
+  width: 100%;
+  align-items: stretch;
 }
 
 .s11-card {
+  flex: 1;
   padding: 32px;
   border-radius: 16px;
   display: flex;
@@ -4121,16 +4068,8 @@ body {
     font-size: clamp(36px, calc(-20px + 17.5vw), 64px);
   }
 
-  .s11-content {
-    flex-direction: column;
-    gap: 32px;
-  }
-
-  .s11-quote {
-    width: 100% !important;
-  }
-
   .s11-cards {
+    flex-direction: column !important;
     width: 100% !important;
   }
 
@@ -4955,24 +4894,10 @@ body {
     width: 320px !important;
     max-width: 100% !important;
   }
-  .s11-content {
-    flex-direction: column !important;
-    gap: 24px !important;
-  }
-  .s11-quote {
-    width: 320px !important;
-    max-width: 100% !important;
-    padding-top: 0 !important;
-  }
-  .s11-quote-text {
-    font-size: 20px !important;
-  }
   .s11-cards {
     width: 100% !important;
-    flex-direction: row !important;
-    gap: 8px !important;
-    margin-top: 24px !important;
-    align-items: flex-start !important;
+    flex-direction: column !important;
+    gap: 16px !important;
   }
   .s11-card {
     flex: 1 1 0% !important;
