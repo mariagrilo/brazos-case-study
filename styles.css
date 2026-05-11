@@ -3620,6 +3620,10 @@ body {
     transform: translateY(0);
   }
 
+  .s7-video-player {
+    object-position: top !important;
+  }
+
   .s7-video-poster {
     width: 516px !important;
     height: 554px !important;
