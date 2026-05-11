@@ -3690,6 +3690,10 @@ body {
     aspect-ratio: 1 / 1 !important;
   }
 
+  .s8-video-player {
+    object-position: top !important;
+  }
+
   .s8-video-poster {
     width: 321px !important;
     height: 428px !important;
@@ -3982,6 +3986,10 @@ body {
     height: auto !important;
     border-radius: 16px !important;
     order: 1 !important;
+  }
+
+  .s10-video-player {
+    object-position: top !important;
   }
 
   .s10-video-poster {
@@ -4505,6 +4513,10 @@ body {
     height: auto !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .s7-video-player {
+    object-position: top !important;
   }
 
   .s7-video-poster {
