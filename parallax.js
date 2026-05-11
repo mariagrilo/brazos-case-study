@@ -39,6 +39,54 @@
     });
   }
 
+  // Ensure all interface (muted/looping) videos autoplay — mobile browsers often
+  // block autoplay until a user gesture has occurred, even for muted videos.
+  function ensureAutoplay(vid) {
+    if (!vid) return;
+    vid.muted = true;
+    vid.playsInline = true;
+    vid.setAttribute('muted', '');
+    vid.setAttribute('playsinline', '');
+    function tryPlay() {
+      if (vid.paused) {
+        var p = vid.play();
+        if (p && p.catch) p.catch(function() {});
+      }
+    }
+    tryPlay();
+    vid.addEventListener('canplay', tryPlay);
+    vid.addEventListener('loadeddata', tryPlay);
+    // Retry on any user gesture (covers iOS Safari's interaction requirement)
+    ['click', 'scroll', 'touchstart', 'keydown'].forEach(function(evt) {
+      document.addEventListener(evt, tryPlay, { once: true });
+    });
+    // Also resume when it becomes visible (IntersectionObserver)
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && vid.paused) {
+            var p = vid.play();
+            if (p && p.catch) p.catch(function() {});
+          }
+        });
+      }, { threshold: 0.1 });
+      observer.observe(vid);
+    }
+  }
+
+  // Apply to all interface/animation videos (not the interview videos)
+  [
+    '.s6-shot-1', '.s6-shot-2', '.s6-shot-3',
+    '.s9-img-dashboard', '.s9-img-event', '.s9-img-reports',
+    '.s10-line-illustration video', '.s10-reports-page video'
+  ].forEach(function(sel) {
+    document.querySelectorAll(sel).forEach(ensureAutoplay);
+  });
+  // Also catch any remaining autoplay videos not covered by selectors above
+  document.querySelectorAll('video[autoplay]').forEach(function(vid) {
+    if (vid.muted) ensureAutoplay(vid);
+  });
+
   function easeOutCubic(t) {
     return 1 - Math.pow(1 - t, 3);
   }
