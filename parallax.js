@@ -1952,8 +1952,26 @@
       var teamMaxOpacity = 1;
       var closingMaxOpacity = 1;
 
+      // Pre-entry: dark section sliding up into view from below (rect.top > 0)
+      if (!isMobile && rect.top > 0 && rect.top < vh) {
+        // entryProgress: 0 when just entering, 1 when fully in view
+        const entryProgress = 1 - (rect.top / vh);
+        // Start fading in credits once 20% of the dark section is visible
+        const fadeIn = Math.max(0, Math.min(1, (entryProgress - 0.2) / 0.8));
+        if (s12Credits) {
+          s12Credits.style.opacity = fadeIn;
+          s12Credits.style.transform = `translateY(${40 * (1 - fadeIn)}px)`;
+        }
+        s12Team.style.opacity = fadeIn * teamMaxOpacity;
+        s12Team.style.transform = `translateY(${40 * (1 - fadeIn)}px)`;
+        s12Closing.style.opacity = 0;
+        s12Closing.style.transform = 'translateY(120px)';
+        s12Cta.style.opacity = 0;
+        return;
+      }
+
       if (!isMobile && progress <= 0.04) {
-        // Phase 0: Credits + team fade in (desktop only)
+        // Phase 0: Credits + team fade in (desktop only) — keep for continuity
         const fadeIn = progress / 0.04;
         if (s12Credits) {
           s12Credits.style.opacity = fadeIn;
