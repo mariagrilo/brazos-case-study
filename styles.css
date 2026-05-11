@@ -3621,11 +3621,13 @@ body {
     transform: translateY(0);
   }
 
-  /* iOS Safari ignores object-position on video — use natural sizing + overflow clip instead */
+  /* Mobile: take video out of absolute flow so natural height clips from top.
+     object-fit/object-position is unreliable on iOS Chrome/Safari for <video>. */
   .s7-video-player {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    display: block !important;
     width: 100% !important;
     height: auto !important;
     object-fit: unset !important;
