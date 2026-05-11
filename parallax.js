@@ -1004,16 +1004,15 @@
     if (header) {
       header.addEventListener('click', () => {
         const isOpen = box.classList.contains('open');
-        // Close all other boxes
-        expandBoxes.forEach((b) => {
-          b.classList.remove('open');
-          const h = b.querySelector('.s4-expand-header');
-          if (h) h.setAttribute('aria-expanded', 'false');
-        });
-        // Toggle the clicked one
+        // Toggle the clicked one independently (both can be open at the same time)
         if (!isOpen) {
           box.classList.add('open');
           header.setAttribute('aria-expanded', 'true');
+        } else {
+          box.classList.remove('open');
+          header.setAttribute('aria-expanded', 'false');
+        }
+        if (!isOpen) {
           // Scroll down so expanded content is visible
           setTimeout(() => {
             const boxRect = box.getBoundingClientRect();
