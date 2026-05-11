@@ -3621,16 +3621,21 @@ body {
     transform: translateY(0);
   }
 
-  /* Mobile: take video out of absolute flow so natural height clips from top.
-     object-fit/object-position is unreliable on iOS Chrome/Safari for <video>. */
+  /* Mobile: absolute + explicit aspect-ratio so iOS Chrome sizes correctly
+     before metadata loads. No object-fit/object-position (broken on iOS). */
   .s7-video-player {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
     width: 100% !important;
     height: auto !important;
+    aspect-ratio: 9 / 16 !important;
     object-fit: unset !important;
+  }
+
+  /* iOS border-radius + overflow:hidden clip fix */
+  .s7-video-card {
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
   }
 
   .s7-video-poster {
